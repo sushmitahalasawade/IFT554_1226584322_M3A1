@@ -40,19 +40,50 @@ catch(error){
 
 }
 
-exports.patchCustomerById = function( req, res){ // must select the body to beraw->JSON in Postman
-const {body} = req;// req.body (attribute)
+exports.patchCustomerById = async function( req, res){ // must select the body to beraw->JSON in Postman
+    try{const request = req.params
+        const saved = await db.patchCustomer(request.id, req.body);
 
-const {id} = req.params;// get id (attribute)
-res.status(200).json({
-status: 'no implemented'
-});
+    if (saved) {
+       res.status(200).json({
+            status: 'successful',
+            message: 'Customer data updated successfully',});
+            } else {
+               res.status(500).json({
+                   status: 'error',
+                   message: 'Failed to update customer data',
+               });
+           }
+       }
+   catch(error){
+       res.status(500).json({
+           status: 'error',
+           message: error.message,
+       });
+   }
 }
 
-exports.deleteCustomerByID = function( req, res){ // must select the body to be raw->JSON in Postman
-const {body} = req;// req.body (attribute)
-const {id} = req.params;// get id
-res.status(200).json({
-status: 'no implemented'
-});
+exports.deleteCustomerByID = async function( req, res){ // must select the body to be raw->JSON in Postman
+    try{
+    const data = req.params   
+    console.log(data.id);
+    const deleted = await db.deleteCustomer(data.id);
+
+    if (deleted) {
+       res.status(200).json({
+            status: 'successful',
+            message: 'Customer data deleted successfully',});
+            } else {
+               res.status(500).json({
+                   status: 'error',
+                   message: 'Failed to delete customer data',
+               });
+           }
+       }
+   catch(error){
+       res.status(500).json({
+           status: 'error',
+           message: error.message,
+       });
+   }
 }

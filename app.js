@@ -25,5 +25,7 @@ next();
 const customerRouter = require('./routes/customerRouter');
 // const userRouter = require('./routes/userRoutes');
 app.use('/api/v1/customer', customerRouter);
+const salesRouter = require('./routes/salesRouter');
+app.use('/api/v1/sales', salesRouter);
 // app.use('/api/v1/users', userRouter);
 module.exports = app;
